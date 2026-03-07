@@ -1,16 +1,4 @@
-/**
- * Definition for singly-linked list.
- * function ListNode(val, next) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.next = (next===undefined ? null : next)
- * }
- */
-/**
- * @param {ListNode} l1
- * @param {ListNode} l2
- * @return {ListNode}
- */
-var addTwoNumbers = function(l1, l2) {
+var addTwoNumbers = function (l1, l2) {
   const sum = new ListNode();
   let pointer = sum;
   let carry = 0;
@@ -21,7 +9,7 @@ var addTwoNumbers = function(l1, l2) {
 
     const sum = l1Val + l2Val + carry;
     const sumDigit = sum % 10;
-    carry = Math.trunc(sum / 10);
+    carry = Math.trunc(sum / 10); //get int part of num
 
     pointer.next = new ListNode(sumDigit);
     pointer = pointer.next;
