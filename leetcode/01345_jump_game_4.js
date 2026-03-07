@@ -13,7 +13,7 @@ var minJumps = function (arr) {
 		map.get(arr[i]).push(i)
 	}
 
-	while (queue.length !== 0) {
+	while (head < queue.length) {
 		const size = queue.length - head;
 
 		for (let i = 0; i < size; i++) {
@@ -23,7 +23,7 @@ var minJumps = function (arr) {
 
 			const nextMoves = [idx + 1, idx - 1];
 			for (const next of nextMoves) {
-				while (next >= 0 && next < n && !visited.has(next)) {
+				if (next >= 0 && next < n && !visited.has(next)) {
 					queue.push(next);
 					visited.add(next);
 				}
