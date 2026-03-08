@@ -1,0 +1,12 @@
+- Automatic code-splitting and prefetching:
+  - To improve the navigation experience, Next.js automatically code splits your application by route segments
+  - In production, whenever `<Link>` components appear in the browser's viewport, Next.js automatically prefetches the code for the linked route in the background.
+- By default, Next.js applications use React Server Components
+- By default, Next.js prerenders routes to improve performance, this is called Static Rendering. So if your data changes, it won't be reflected in your dashboard.
+- Static rendering:
+  - Data fetching and rendering happens on the server at build time (when you deploy) or when revalidating data.
+  - Benefits: Faster Websites, Reduced Server Load, SEO
+
+- Dynamic rendering:
+  - content is rendered on the server for each user at request time (when the user visits the page).
+  - Benefits: Real-Time Data, User-Specific Content, Request Time Information
