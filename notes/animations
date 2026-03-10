@@ -44,3 +44,11 @@ A trick to make your UI even more responsive with the help of ease-out is to add
 - `ease-out` ≈ high stiffness, high damping (fast start, smooth stop).
 - `ease-in-out` ≈ balanced stiffness/damping (smooth acceleration/deceleration).
 - `elastic/bounce` easings ≈ low damping, moderate stiffness (oscillations).
+- Duration and Bounce:
+	- Defination:
+		- Duration: sets the total time the animation should take.
+		- Bounce: controls how much the animation overshoots and oscillates before settling.
+	- Simple Analogy:
+		- Duration = how long until the ball lands in the basket.
+		- Bounce = how much the ball rattles around before it stays put.
+		- If you increase bounce, the ball jiggles more, but it still lands in the basket at the same time.
