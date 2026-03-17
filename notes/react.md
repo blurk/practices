@@ -1,4 +1,5 @@
 ## Discrete Event
+
 - A discrete input is a type of event where the result of one event can affect the behavior of the next, like clicks or presses. Multiple discrete events cannot be batched or throttled without affecting program behavior.
 - A practical example where this matters is a counter. If the user increments a counter multiple times in quick succession, we must process each one individually so that the final count is correct
 
@@ -80,3 +81,9 @@
 - This explains why `useEffect` in children fires before the parent’s `useEffect`.
 
 In short: **components render top-down, but effects commit bottom-up** due to React’s fiber tree traversal. This distinction is crucial for avoiding subtle bugs when multiple `useEffect` hooks interact across parent-child hierarchies.
+
+## useLayoutEffect
+
+- The code inside useLayoutEffect and all state updates scheduled from it block the browser from repainting the screen. When used excessively, this makes your app slow. When possible, prefer useEffect.
+- If you trigger a state update inside useLayoutEffect, React will execute all remaining Effects immediately including useEffect.
+- React guarantees that the code inside useLayoutEffect and any state updates scheduled inside it will be processed before the browser repaints the screen.
