@@ -95,3 +95,11 @@ In short: **components render top-down, but effects commit bottom-up** due to Re
 ## `useInsertionEffect`
 
 - `useInsertionEffect` allows us to run some effects before the DOM mutation is done, since Layout Effects are after DOM mutation, so this is the earliest timing we can get from effect hooks.
+
+- There are 3 kinds of Effects we can create now. In commit phase, the ordering of effects are.
+  1. Insertion Effects - useInsertionEffect()
+  2. Mutation Effects - host DOM updates diffed from reconciliation
+  3. Layout Effects - useLayoutEffect()
+  4. Passive Effects - useEffect()
+
+*It is synchronous from 1 to 3, the last step of Passive Effects are run in next tick*
