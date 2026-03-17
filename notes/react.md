@@ -17,29 +17,30 @@
 ## Rendering process
 
 - Trigger -> Render -> Commit
+  - Triggering a render:
+    - The component’s initial render, or state updates with setState.
+    - A state update is put in a queue and scheduled to be processed by the React Scheduler.
+  - Rendering:
+    - React calls the component and works on the state update.
+    - React reconciles and marks it as “dirty” for commit phase.
+    - Create new DOM node internally.
+  - Committing to the DOM:
+    - Apply actual DOM manipulation.
+    - Runs effects (useEffect, useLayoutEffect).
 
-	- Triggering a render:
-		- The component’s initial render, or state updates with setState.
-		- A state update is put in a queue and scheduled to be processed by the React Scheduler.
-	- Rendering:
-		- React calls the component and works on the state update.
-		- React reconciles and marks it as “dirty” for commit phase.
-		- Create new DOM node internally.
-	- Committing to the DOM:
-		- Apply actual DOM manipulation.
-		- Runs effects (useEffect, useLayoutEffect).
 - Internally, React uses a tree-like data structure called fiber tree to represent the component hierarchy and track updates.
 - Every time there is a state update, React will construct a new fiber tree and compare against the old tree internally.
 
 - How React walks the fiber tree. Notice that each node is stepped twice. The rule is simple:
-	1. Traverse downwards.
-	2. In each fiber node, React checks
-		1. If there’s a child, move to the child.
-		2. If there’s no child, step again the current node. Then,
-			1. If there’s a sibling, move to the sibling.
-			2. If there’s no sibling, move up to its parent.
+  1.  Traverse downwards.
+  2.  In each fiber node, React checks
+      1. If there’s a child, move to the child.
+      2. If there’s no child, step again the current node. Then,
+         1. If there’s a sibling, move to the sibling.
+         2. If there’s no sibling, move up to its parent.
 
 ### 🔄 React Lifecycle Phases
+
 - **Trigger phase**: A render is scheduled (initial mount or state update).
 - **Render phase**:
   - React traverses the **fiber tree**.
@@ -52,12 +53,14 @@
   - This happens in a **separate traversal** of the fiber tree.
 
 ### 📚 Traversal Algorithm
+
 - React uses a **depth-first traversal** of the fiber tree.
 - Each node is “stepped twice”:
   - **Render phase**: `beginWork()` (call component) → `completeWork()` (prepare DOM node).
   - **Commit phase**: Walk again, this time flushing effects.
 
 ### ⚡ Order of Execution
+
 - **Render phase order**:
   - Parent renders first → then child → then siblings.
   - Example logs:
@@ -76,14 +79,19 @@
     ```
 
 ### ✅ Key Takeaway
+
 - **Render phase**: Parent → Child → Sibling.
 - **Commit phase (effects)**: Child → Parent → Sibling.
 - This explains why `useEffect` in children fires before the parent’s `useEffect`.
 
 In short: **components render top-down, but effects commit bottom-up** due to React’s fiber tree traversal. This distinction is crucial for avoiding subtle bugs when multiple `useEffect` hooks interact across parent-child hierarchies.
 
-## useLayoutEffect
+## `useLayoutEffect`
 
-- The code inside useLayoutEffect and all state updates scheduled from it block the browser from repainting the screen. When used excessively, this makes your app slow. When possible, prefer useEffect.
-- If you trigger a state update inside useLayoutEffect, React will execute all remaining Effects immediately including useEffect.
-- React guarantees that the code inside useLayoutEffect and any state updates scheduled inside it will be processed before the browser repaints the screen.
+- The code inside `useLayoutEffect` and all state updates scheduled from it block the browser from repainting the screen. When used excessively, this makes your app slow. When possible, prefer useEffect.
+- If you trigger a state update inside `useLayoutEffect`, React will execute all remaining Effects immediately including useEffect.
+- React guarantees that the code inside `useLayoutEffect` and any state updates scheduled inside it will be processed before the browser repaints the screen.
+
+## `useInsertionEffect`
+
+- `useInsertionEffect` allows us to run some effects before the DOM mutation is done, since Layout Effects are after DOM mutation, so this is the earliest timing we can get from effect hooks.
